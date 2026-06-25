@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ovos-media-provider-spotify"
+dynamic = ["version"]
+description = "OVOS MediaProvider plugin for Spotify search (replaces ovos-skill-spotify)"
+readme = "README.md"
+license = { text = "Apache-2.0" }
+authors = [{ name = "JarbasAI", email = "jarbasai@mailfence.com" }]
+requires-python = ">=3.10"
+keywords = ["ovos", "OpenVoiceOS", "OCP", "media", "music", "spotify", "MediaProvider"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+]
+dependencies = [
+    "mediavocab>=1.0.0",
+    "ovos-plugin-manager>=2.8.0a1,<3.0.0",
+    "ovos-utils>=0.3.5",
+    "spotipy>=2.24.0",
+    "requests",
+]
+
+[project.optional-dependencies]
+test = ["pytest", "pytest-cov"]
+
+[project.urls]
+Homepage = "https://github.com/OpenVoiceOS/ovos-media-provider-spotify"
+Source = "https://github.com/OpenVoiceOS/ovos-media-provider-spotify"
+
+[project.entry-points."opm.media.provider"]
+spotify = "ovos_media_provider_spotify:SpotifyMediaProvider"
+
+[tool.setuptools]
+packages = ["ovos_media_provider_spotify"]
+
+[tool.setuptools.dynamic]
+version = { attr = "ovos_media_provider_spotify.version.__version__" }
