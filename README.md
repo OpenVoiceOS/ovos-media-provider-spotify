@@ -1,22 +1,10 @@
 # ovos-media-provider-spotify
 
-OVOS **MediaProvider** plugin for [Spotify](https://spotify.com). Replaces the
-search half of the deprecated OCP search skill
-[`ovos-skill-spotify`](https://github.com/OpenVoiceOS/ovos-skill-spotify).
+This is an OVOS **MediaProvider** plugin for [Spotify](https://spotify.com). It replaces the search half of the deprecated OCP search skill [`ovos-skill-spotify`](https://github.com/OpenVoiceOS/ovos-skill-spotify).
 
-Instead of broadcasting `ovos.common_play.query` over the bus and waiting for
-skills to answer, the OCP pipeline loads MediaProvider plugins in-process, gates
-them by routing, and calls `search()` directly. This plugin queries the Spotify
-Web API (via [`spotipy`](https://spotipy.readthedocs.io)) for tracks, artists
-and albums, then bridges each track into a
-[`mediavocab.Release`](https://github.com/TigreGotico/mediavocab) carrying the
-`spotify:` URI.
+The OCP pipeline loads MediaProvider plugins in-process and calls `search()` directly, instead of broadcasting `ovos.common_play.query` over the bus and waiting for skills to answer. This plugin queries the Spotify Web API (through [`spotipy`](https://spotipy.readthedocs.io)) for tracks, artists, and albums, then converts each track into a [`mediavocab.Release`](https://github.com/TigreGotico/mediavocab) that carries the `spotify:` URI.
 
-Playback is handled separately by the
-[`ovos-media-plugin-spotify`](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify)
-backend — this repo only does **search/catalog**. Both share the `ocp_spotify`
-OAuth credentials, so no extra configuration is required when Spotify is already
-set up.
+The [`ovos-media-plugin-spotify`](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify) backend handles playback separately. This plugin only does search and catalog lookup. Both plugins share the `ocp_spotify` OAuth credentials, so no extra configuration is needed when Spotify is already set up.
 
 ## Install
 
@@ -24,7 +12,16 @@ set up.
 pip install ovos-media-provider-spotify
 ```
 
+The plugin registers itself through the `opm.media.provider` entry point, so OCP picks it up automatically after install.
+
+```toml
+[project.entry-points."opm.media.provider"]
+spotify = "ovos_media_provider_spotify:SpotifyMediaProvider"
+```
+
 ## Routing
+
+OCP routes a query to this plugin when it matches these axes.
 
 | Axis | Value |
 |------|-------|
@@ -32,18 +29,17 @@ pip install ovos-media-provider-spotify
 | `playback_type` | `AUDIO` |
 | `genre_filter` | *(none)* |
 
-## Entry point
-
-```toml
-[project.entry-points."opm.media.provider"]
-spotify = "ovos_media_provider_spotify:SpotifyMediaProvider"
-```
-
 ## Configuration
 
 | Key | Default | Description |
 |-----|---------|-------------|
 | `max_tracks` | `25` | Maximum tracks returned per matched album/artist. |
+
+## Related projects
+
+- [`ovos-media-plugin-spotify`](https://github.com/OpenVoiceOS/ovos-media-plugin-spotify): the Spotify playback backend
+- [`ovos-skill-spotify`](https://github.com/OpenVoiceOS/ovos-skill-spotify): the deprecated OCP search skill this plugin replaces
+- [`mediavocab`](https://github.com/TigreGotico/mediavocab): the media metadata vocabulary this plugin returns results in
 
 ## License
 
