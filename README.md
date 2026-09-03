@@ -21,13 +21,11 @@ spotify = "ovos_media_provider_spotify:SpotifyMediaProvider"
 
 ## Routing
 
-OCP routes a query to this plugin when it matches these axes.
-
-| Axis | Value |
-|------|-------|
-| `media` | `MUSIC` |
-| `playback_type` | `AUDIO` |
-| `genre_filter` | *(none)* |
+There is no declarative routing table. OCP calls every installed provider's `search()`
+method for each query; a provider that cannot serve the query (wrong media type, no
+matching results, missing API credentials, …) just returns an empty list. This plugin
+only ever returns music tracks, so it naturally contributes nothing to a query for
+another media type.
 
 ## Configuration
 
