@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.0.1a6](https://github.com/OpenVoiceOS/ovos-media-provider-spotify/tree/0.0.1a6) (2026-09-26)
+
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-media-provider-spotify/compare/0.0.1a5...0.0.1a6)
+
+**Merged pull requests:**
+
+- Configure Renovate [\#1](https://github.com/OpenVoiceOS/ovos-media-provider-spotify/pull/1) ([renovate[bot]](https://github.com/apps/renovate))
+
 ## [0.0.1a5](https://github.com/OpenVoiceOS/ovos-media-provider-spotify/tree/0.0.1a5) (2026-09-16)
 
 [Full Changelog](https://github.com/OpenVoiceOS/ovos-media-provider-spotify/compare/0.0.1a4...0.0.1a5)
